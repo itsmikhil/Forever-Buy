@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+a.active hr {
+  display: block;
+}
+
+.sidebar a.active {
+  background-color: beige;
+
+}
