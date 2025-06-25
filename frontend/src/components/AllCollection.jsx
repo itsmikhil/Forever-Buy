@@ -56,7 +56,7 @@ const AllCollection = () => {
           >
             filters{" "}
             <img
-              className="w-[0.5rem] h-[1rem] rotate-90"
+              className={`w-[0.5rem] h-[1rem] ${showFilters?"rotate-270":"rotate-90"}`}
               src={assets.dropdown_icon}
               alt=""
             />
