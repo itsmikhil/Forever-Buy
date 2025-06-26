@@ -6,7 +6,6 @@ import Latest from '../components/Latest'
 import Bestseller from '../components/Bestseller'
 import Policies from '../components/Policies'
 import Subscribe from '../components/Subscribe'
-import Footer from '../components/Footer'
 
 const Home = () => {
   return (
@@ -16,7 +15,6 @@ const Home = () => {
         <Bestseller/>
         <Policies/>
         <Subscribe/>
-        <Footer/>
     </div>
   )
 }
