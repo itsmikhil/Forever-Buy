@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Title from "./Title";
 import { assets, products } from "../assets/frontend_assets/assets";
+import { NavLink } from "react-router-dom";
 
 const AllCollection = () => {
   const [filteredProducts, setfilteredProducts] = useState(products);
@@ -51,12 +52,14 @@ const AllCollection = () => {
         {/* filters */}
         <div className="w-full sm:w-[20%] flex flex-col gap-4 py-3">
           <h1
-            className="uppercase text-xl flex items-center gap-2"
+            className="uppercase text-xl flex items-center gap-2 cursor-pointer"
             onClick={() => setshowFilters(!showFilters)}
           >
-            filters{" "}
+            filters
             <img
-              className={`w-[0.5rem] h-[1rem] ${showFilters?"rotate-270":"rotate-90"}`}
+              className={`w-[0.5rem] h-[1rem] ${
+                showFilters ? "rotate-270" : "rotate-90"
+              }`}
               src={assets.dropdown_icon}
               alt=""
             />
@@ -167,17 +170,19 @@ const AllCollection = () => {
             {filteredProducts.map((item, index) => {
               return (
                 <div key={index} className="flex flex-col gap-2 cursor-pointer">
-                  <div className="overflow-hidden">
-                    <img
-                      src={item.image[0]}
-                      className="hover:scale-105 transition-transform ease-out duration-150 object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <h1 className="text-[0.8rem]">{item.name}</h1>
-                    <h1 className="text-sm">${item.price}</h1>
-                  </div>
+                  <NavLink to={`/product/${item._id}`}>
+                    <div className="overflow-hidden">
+                      <img
+                        src={item.image[0]}
+                        className="hover:scale-105 transition-transform ease-out duration-150 object-cover"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h1 className="text-[0.8rem]">{item.name}</h1>
+                      <h1 className="text-sm">${item.price}</h1>
+                    </div>
+                  </NavLink>
                 </div>
               );
             })}
