@@ -1,11 +1,21 @@
 import React, { useContext, useState } from "react";
 import { assets } from "../assets/frontend_assets/assets";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SideBar from "./SideBar";
 import { DataContext } from "../context/DataContext";
+import Search from "./Search";
 
-const NavBar = () => {
+const NavBar = ({searchText,setsearchText}) => {
+  const navigate=useNavigate();
   const { sideBar, setsideBar } = useContext(DataContext);
+  const [searchBar, setsearchBar] = useState(false);
+
+
+  // search comp handling
+  let handleSearchComp = () => {
+    navigate("/collection");
+    setsearchBar(true);
+  };
   return (
     <>
       <div className="w-full flex px-6 sm:px-24 justify-between py-4 items-center">
@@ -38,6 +48,7 @@ const NavBar = () => {
         </ul>
         <div className="flex gap-4">
           <img
+            onClick={handleSearchComp}
             src={assets.search_icon}
             alt=""
             className=" w-[1.5rem] h-[1.5rem] cursor-pointer"
@@ -70,6 +81,7 @@ const NavBar = () => {
         </div>
       </div>
       <hr className="w-[88%] mx-auto border-gray-200" />
+      <Search searchText={searchText} setsearchText={setsearchText} searchBar={searchBar} setsearchBar={setsearchBar} />
     </>
   );
 };

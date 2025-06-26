@@ -2,10 +2,10 @@ import React from 'react'
 import AllCollection from '../components/AllCollection'
 import Subscribe from '../components/Subscribe'
 
-const Collection = () => {
+const Collection = ({searchText,setsearchText}) => {
   return (
     <div>
-      <AllCollection/>
+      <AllCollection searchText={searchText} setsearchText={setsearchText}/>
       <Subscribe/>
     </div>
   )

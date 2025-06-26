@@ -3,13 +3,14 @@ import Title from "./Title";
 import { assets, products } from "../assets/frontend_assets/assets";
 import { NavLink } from "react-router-dom";
 
-const AllCollection = () => {
+const AllCollection = ({ searchText, setsearchText }) => {
   const [filteredProducts, setfilteredProducts] = useState(products);
   const [selectedFilters, setselectedFilters] = useState([]);
+  const [selectedTypes, setselectedTypes] = useState([]);
   const [pricingOrder, setpricingOrder] = useState("relevant");
   const [showFilters, setshowFilters] = useState(true);
 
-  //   storing filtered category
+  //   storing selected category
   let handleSelectionOfFilter = (e) => {
     if (selectedFilters.includes(e.target.value)) {
       setselectedFilters(
@@ -20,16 +21,29 @@ const AllCollection = () => {
     }
   };
 
+  // selection of types
+  let handleSelectionOfTypes = (e) => {
+    if (selectedTypes.includes(e.target.value)) {
+      setselectedTypes(selectedTypes.filter((item) => item != e.target.value));
+    } else {
+      setselectedTypes([...selectedTypes, e.target.value]);
+    }
+  };
+
   //   updating filtered products based on selected category
   let handleFilterProducts = () => {
     let updatedProducts = [...products];
 
     // category based sorting
     if (selectedFilters.length > 0) {
-      updatedProducts = updatedProducts.filter(
-        (item) =>
-          selectedFilters.includes(item.category) ||
-          selectedFilters.includes(item.subCategory)
+      updatedProducts = updatedProducts.filter((item) =>
+        selectedFilters.includes(item.category)
+      );
+    }
+    // type based sorting
+    if (selectedTypes.length > 0) {
+      updatedProducts = updatedProducts.filter((item) =>
+        selectedTypes.includes(item.subCategory)
       );
     }
 
@@ -39,12 +53,17 @@ const AllCollection = () => {
     } else if (pricingOrder === "High to low") {
       updatedProducts.sort((a, b) => b.price - a.price);
     }
+
+    // search based sorting
+    if (searchText.trim() != "") {
+      updatedProducts = updatedProducts.filter((item)=>item.name.toLowerCase().includes(searchText.trim().toLowerCase()));
+    }
     setfilteredProducts(updatedProducts);
   };
 
   useEffect(() => {
     handleFilterProducts();
-  }, [selectedFilters, pricingOrder]);
+  }, [selectedFilters, pricingOrder, selectedTypes, searchText]);
 
   return (
     <div className="w-full min-h-screen">
@@ -112,7 +131,7 @@ const AllCollection = () => {
                       name="Topwear"
                       id="Topwear"
                       value={"Topwear"}
-                      onChange={handleSelectionOfFilter}
+                      onChange={handleSelectionOfTypes}
                     />
                     <label htmlFor="Topwear">Topwear</label>
                   </div>
@@ -122,7 +141,7 @@ const AllCollection = () => {
                       name="Bottomwear"
                       id="Bottomwear"
                       value={"Bottomwear"}
-                      onChange={handleSelectionOfFilter}
+                      onChange={handleSelectionOfTypes}
                     />
                     <label htmlFor="Bottomwear">Bottomwear</label>
                   </div>
@@ -132,7 +151,7 @@ const AllCollection = () => {
                       name="Winterwear"
                       id="Winterwear"
                       value="Winterwear"
-                      onChange={handleSelectionOfFilter}
+                      onChange={handleSelectionOfTypes}
                     />
                     <label htmlFor="Winterwear">Winterwear</label>
                   </div>

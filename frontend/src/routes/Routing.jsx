@@ -8,11 +8,11 @@ import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
 import Product from '../pages/Product'
 
-const Routing = () => {
+const Routing = ({searchText, setsearchText}) => {
   return (
     <Routes>
       <Route element={<Home/>} path={"/"} />
-      <Route element={<Collection/>} path={"/collection"} />
+      <Route element={<Collection searchText={searchText} setsearchText={setsearchText}/>} path={"/collection"} />
       <Route element={<About/>} path={"/about"} />
       <Route element={<ContactUs/>} path={"/contact"} />
       <Route element={<Login/>} path={"/login"} />
