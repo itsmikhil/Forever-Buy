@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { DataContextProvider } from "./context/DataContext.jsx";
+import { ProductContextProvider } from "./context/ProductContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <DataContextProvider>
-        <App />
-      </DataContextProvider>
+      <ProductContextProvider>
+        <DataContextProvider>
+          <App />
+        </DataContextProvider>
+      </ProductContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

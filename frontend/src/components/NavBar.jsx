@@ -5,11 +5,16 @@ import SideBar from "./SideBar";
 import { DataContext } from "../context/DataContext";
 import Search from "./Search";
 
-const NavBar = ({searchText,setsearchText}) => {
-  const navigate=useNavigate();
-  const { sideBar, setsideBar } = useContext(DataContext);
-  const [searchBar, setsearchBar] = useState(false);
-
+const NavBar = () => {
+  const navigate = useNavigate();
+  const {
+    sideBar,
+    setsideBar,
+    searchBar,
+    setsearchBar,
+    searchText,
+    setsearchText,
+  } = useContext(DataContext);
 
   // search comp handling
   let handleSearchComp = () => {
@@ -81,7 +86,12 @@ const NavBar = ({searchText,setsearchText}) => {
         </div>
       </div>
       <hr className="w-[88%] mx-auto border-gray-200" />
-      <Search searchText={searchText} setsearchText={setsearchText} searchBar={searchBar} setsearchBar={setsearchBar} />
+      <Search
+        searchText={searchText}
+        setsearchText={setsearchText}
+        searchBar={searchBar}
+        setsearchBar={setsearchBar}
+      />
     </>
   );
 };

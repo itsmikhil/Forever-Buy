@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { assets } from "../assets/frontend_assets/assets";
+import { DataContext } from "../context/DataContext";
 
-const Search = ({ searchBar, setsearchBar, searchText, setsearchText }) => {
+const Search = () => {
+  let { searchBar, setsearchBar, searchText, setsearchText }=useContext(DataContext)
   return (
     searchBar && (
       <div className="w-full bg-red-50 flex justify-center items-center relative py-6 mb-2 gap-5">

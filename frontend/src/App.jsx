@@ -6,12 +6,11 @@ import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
 
 const App = () => {
-    const [searchText, setsearchText] = useState("")
   return (
     <div className="w-full h-screen  font-[Outfit]">
-      <NavBar searchText={searchText} setsearchText={setsearchText}/>
+      <NavBar />
       <SideBar />
-      <Routing searchText={searchText} setsearchText={setsearchText}></Routing>
+      <Routing ></Routing>
       <Footer/>
     </div>
   );

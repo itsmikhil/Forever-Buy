@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Title from "./Title";
 import { assets, products } from "../assets/frontend_assets/assets";
 import { NavLink } from "react-router-dom";
+import { DataContext } from "../context/DataContext";
 
-const AllCollection = ({ searchText, setsearchText }) => {
+const AllCollection = () => {
   const [filteredProducts, setfilteredProducts] = useState(products);
   const [selectedFilters, setselectedFilters] = useState([]);
   const [selectedTypes, setselectedTypes] = useState([]);
   const [pricingOrder, setpricingOrder] = useState("relevant");
   const [showFilters, setshowFilters] = useState(true);
+  let {searchText, setsearchText}=useContext(DataContext)
 
   //   storing selected category
   let handleSelectionOfFilter = (e) => {
@@ -67,7 +69,7 @@ const AllCollection = ({ searchText, setsearchText }) => {
 
   return (
     <div className="w-full min-h-screen">
-      <div className="w-[95%] sm:w-[80%] mx-auto flex flex-col sm:flex-row relative">
+      <div className="w-[95%] sm:w-[80%] mx-auto flex flex-col sm:flex-row relative py-4">
         {/* filters */}
         <div className="w-full sm:w-[20%] flex flex-col gap-4 py-3">
           <h1
