@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import { DataContext } from "../context/DataContext";
+import { useLocation } from "react-router-dom";
 
 const Search = () => {
   let { searchBar, setsearchBar, searchText, setsearchText }=useContext(DataContext)
+  const location=useLocation();
+  
   return (
-    searchBar && (
+    searchBar && location.pathname=="/collection" && (
       <div className="w-full bg-red-50 flex justify-center items-center relative py-6 mb-2 gap-5">
         <div className="flex border-[1px] px-8 py-2 rounded-full sm:w-[40%]">
           <input

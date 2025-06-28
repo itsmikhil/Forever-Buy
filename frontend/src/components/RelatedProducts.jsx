@@ -9,7 +9,6 @@ const RelatedProducts = ({ singleProduct, setsingleProduct }) => {
 
   //   finding related products using keywords
   let handelRelatedProducts = () => {
-
     let result = products;
     let keywords = singleProduct.name.toLowerCase().split(" ");
 

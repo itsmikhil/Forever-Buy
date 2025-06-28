@@ -4,13 +4,21 @@ import Login from "./Login";
 import { assets } from "../assets/frontend_assets/assets";
 import { ProductContext } from "../context/ProductContext";
 import RelatedProducts from "../components/RelatedProducts";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { DataContext } from "../context/DataContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Product = () => {
   let { id } = useParams();
   let { products } = useContext(ProductContext);
+  let { singleProduct, setsingleProduct, handleAdditionInCart } =
+    useContext(DataContext);
 
-  const [singleProduct, setsingleProduct] = useState();
   const [image, setimage] = useState(singleProduct?.image[0]);
+
+  const { selectedSize, setselectedSize } = useContext(DataContext);
 
   let handleImageSelection = () => {
     if (singleProduct) {
@@ -18,19 +26,18 @@ const Product = () => {
     }
   };
 
-  // updating selected Image whenever selected product changes
-  useEffect(() => {
-    if (singleProduct) {
-      setimage(singleProduct.image?.[0]);
-    }
-  }, [singleProduct]);
-
   // finding product whenever new product is selected from collection or related products
   useEffect(() => {
     setsingleProduct(products?.find((item) => item._id === id));
   }, [id]);
 
-  const [selectedSize, setselectedSize] = useState("");
+  // updating selected Image whenever selected product changes
+  useEffect(() => {
+    if (singleProduct) {
+      setimage(singleProduct.image?.[0]);
+    }
+    setselectedSize("");
+  }, [singleProduct]);
 
   return (
     singleProduct && (
@@ -50,7 +57,9 @@ const Product = () => {
                 );
               })}
             </div>
-            <img src={image} className="flex-1" alt="" />
+            <div className="flex-1 h-[32rem]  overflow-hidden relative">
+              <img src={image} className="h-full object-cover" alt="" />
+            </div>
           </div>
           {/* right */}
           <div className="gap-5 px-4 sm:w-[50%] flex flex-col justify-evenly">
@@ -101,7 +110,10 @@ const Product = () => {
                 );
               })}
             </div>
-            <button className="uppercase bg-black text-white px-8 py-2 cursor-pointer w-[11rem]">
+            <button
+              onClick={handleAdditionInCart}
+              className="uppercase  bg-black text-white px-8 py-2 cursor-pointer w-[11rem]"
+            >
               Add To Cart
             </button>
             <hr className="border-gray-200" />
@@ -116,6 +128,7 @@ const Product = () => {
           singleProduct={singleProduct}
           setsingleProduct={setsingleProduct}
         />
+        <ToastContainer/>
       </>
     )
   );
