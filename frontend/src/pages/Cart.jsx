@@ -3,7 +3,7 @@ import { DataContext } from "../context/DataContext";
 import { assets } from "../assets/frontend_assets/assets";
 import { NavLink } from "react-router-dom";
 
-const Cart = () => {
+const Cart = () => { 
   let {
     cart,
     setcart,
