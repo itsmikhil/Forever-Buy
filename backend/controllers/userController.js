@@ -12,6 +12,17 @@ let handleUserRegistration = async (req, res) => {
   try {
     let { email, name, password } = req.body;
 
+    name = name.trim();
+    email = email.trim();
+    password = password.trim();
+
+    if (!email || !name || !password) {
+      return res.json({
+        success: false,
+        message: "Enter all required fields",
+      });
+    }
+
     let exist = await userModel.findOne({ email });
 
     if (exist) {
@@ -43,4 +54,41 @@ let handleUserRegistration = async (req, res) => {
   }
 };
 
-export default { handleUserRegistration };
+let handleUserLogin = async (req, res) => {
+  try {
+    let { email, password } = req.body;
+    email = email.trim();
+    password = password.trim();
+
+    if (!email || !password) {
+      return res.json({
+        success: false,
+        message: "Enter all required fields",
+      });
+    }
+
+    if (!validator.isEmail(email)) {
+      return res.json({ success: false, message: "Enter valid email id" });
+    }
+
+    let exist = await userModel.findOne({ email });
+
+    if (!exist) {
+      return res.json({ success: false, message: "Invalid credentials" });
+    }
+
+    let result = await bcrypt.compare(password, exist.password);
+
+    if (!result) {
+      return res.json({ success: false, message: "Invalid credentials" });
+    }
+
+    let token = createToken(exist.email, exist._id);
+
+    return res.json({ success: true, token });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export default { handleUserRegistration, handleUserLogin };
