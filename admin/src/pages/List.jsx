@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { assets } from "../assets/admin_assets/assets";
+import { AdminDataContext } from "../context/AdminDataContext";
 
 const List = () => {
+  let { fetchAllProducts, products, deleteProduct } =
+    useContext(AdminDataContext);
+
+  useEffect(() => {
+    fetchAllProducts();
+  }, [products]);
+
   return (
     <div className="w-full py-4 px-7 min-h-screen">
       <h1>All Product List</h1>
@@ -13,34 +21,23 @@ const List = () => {
         <h1>Action</h1>
       </div>
       <div className="grid grid-cols-1 py-3 gap-3">
-        <div className="grid grid-rows-2 grid-cols-[1fr_2fr_1fr] sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr_1fr_1fr]  border-1 border-gray-200 p-2 items-center">
-          <div className="w-12 h-15 bg-blue-100"></div>
-          <h1>Kid Tapered Slim Fit Trouser</h1>
-          <h1>Kids</h1>
-          <h1>$38</h1>
-          <h1 className="cursor-pointer">X</h1>
-        </div>
-        <div className="grid grid-rows-2 grid-cols-[1fr_2fr_1fr] sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr_1fr_1fr]  border-1 border-gray-200 p-2 items-center">
-          <div className="w-12 h-15 bg-blue-100"></div>
-          <h1>Kid Tapered Slim Fit Trouser</h1>
-          <h1>Kids</h1>
-          <h1>$38</h1>
-          <h1 className="cursor-pointer">X</h1>
-        </div>
-        <div className="grid grid-rows-2 grid-cols-[1fr_2fr_1fr] sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr_1fr_1fr]  border-1 border-gray-200 p-2 items-center">
-          <div className="w-12 h-15 bg-blue-100"></div>
-          <h1>Kid Tapered Slim Fit Trouser</h1>
-          <h1>Kids</h1>
-          <h1>$38</h1>
-          <h1 className="cursor-pointer">X</h1>
-        </div>
-        <div className="grid grid-rows-2 grid-cols-[1fr_2fr_1fr] sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr_1fr_1fr]  border-1 border-gray-200 p-2 items-center">
-          <div className="w-12 h-15 bg-blue-100"></div>
-          <h1>Kid Tapered Slim Fit Trouser</h1>
-          <h1>Kids</h1>
-          <h1>$38</h1>
-          <h1 className="cursor-pointer">X</h1>
-        </div>
+        {products &&
+          products.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="grid grid-rows-2 grid-cols-[1fr_2fr_1fr] sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr_1fr_1fr]  border-1 border-gray-200 p-2 items-center"
+              >
+                <div className="w-12 h-15 ">
+                  <img className="object-cover" src={item.images[0]} alt="" />
+                </div>
+                <h1>{item.name}</h1>
+                <h1>{item.category}</h1>
+                <h1>${item.price}</h1>
+                <h1 onClick={()=>deleteProduct(item._id)} className="cursor-pointer">X</h1>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

@@ -15,7 +15,6 @@ const addProduct = async (req, res) => {
       !price ||
       !category ||
       !subCategory ||
-      !bestseller ||
       !req.files
     ) {
       return res.json({ success: false, message: "Enter all required fields" });
@@ -51,7 +50,7 @@ const addProduct = async (req, res) => {
       images.map((img) => uploadToCloudinary(img.buffer))
     );
 
-    // uplaoding product in db
+    // uploading product in db
     let newProduct = await productModel.create({
       name,
       description,
@@ -92,7 +91,7 @@ const deleteProduct = async (req, res) => {
   try {
     let { id } = req.params;
     let result = await productModel.findByIdAndDelete(id);
-    return res.json({ success: true, deletedProduct: result });
+    return res.json({ success: true,message:"Item Deleted successfully", deletedProduct: result });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }

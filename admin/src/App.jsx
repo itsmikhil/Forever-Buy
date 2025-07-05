@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Routing from "./routes/Routing";
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
+  
+
   return (
     <div className="font-[outfit] bg-[#F9FAFB] min-h-screen w-full">
+      <ToastContainer/>
       <NavBar />
       <div className="flex">
         <div className="w-[18%]">
           <SideBar />
         </div>
         <div className="w-[82%] ">
-          <Routing/>
+          <Routing />
         </div>
       </div>
     </div>
