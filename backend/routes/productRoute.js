@@ -6,11 +6,13 @@ import {
   listProducts,
   singleProduct,
 } from "../controllers/productController.js";
+import adminAuth from "../middlewares/adminAuth.js";
 
 const productRouter = express.Router();
 
 productRouter.post(
   "/add",
+  adminAuth,
   upload.fields([
     { name: "image1", maxCount: 1 },
     { name: "image2", maxCount: 1 },
@@ -24,6 +26,6 @@ productRouter.get("/list", listProducts);
 
 productRouter.get("/single/:id", singleProduct);
 
-productRouter.delete("/delete/:id", deleteProduct);
+productRouter.delete("/delete/:id", adminAuth, deleteProduct);
 
 export default productRouter;

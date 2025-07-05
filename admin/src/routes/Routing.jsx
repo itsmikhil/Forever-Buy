@@ -7,7 +7,7 @@ import Orders from "../pages/Orders";
 const Routing = () => {
   return (
     <Routes>
-      <Route element={<Add />} path="/" />
+      <Route element={<List />} path="/" />
       <Route element={<Add />} path="/add" />
       <Route element={<List />} path="/list" />
       <Route element={<Orders />} path="/orders" />

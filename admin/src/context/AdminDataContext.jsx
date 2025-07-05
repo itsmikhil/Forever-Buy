@@ -6,8 +6,10 @@ export const AdminDataContext = createContext();
 
 export const AdminDataContextProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [token, settoken] = useState("");
   const [products, setproducts] = useState([]);
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [token, settoken] = useState("");
   const [name, setname] = useState("");
   const [price, setprice] = useState();
   const [description, setdescription] = useState("");
@@ -20,6 +22,8 @@ export const AdminDataContextProvider = ({ children }) => {
   const [image3, setimage3] = useState();
   const [image4, setimage4] = useState();
 
+  // <----------------------Add expire token feature------------------->
+
   let fetchAllProducts = async () => {
     try {
       let res = await axios.get(backendUrl + "/api/products/list");
@@ -31,6 +35,37 @@ export const AdminDataContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  let handleLogin = async (e) => {
+    try {
+      e.preventDefault();
+      let res = await axios.post(backendUrl + "/api/admin/login", {
+        email,
+        password,
+      });
+      if (res.data.success) {
+        settoken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        setemail("");
+        setpassword("");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage?.getItem("token") != "") {
+      settoken(localStorage?.getItem("token"));
+    }
+  }, []);
+
+  let logOutFunction = () => {
+    settoken("");
+    localStorage.setItem("token", "");
   };
 
   let addProduct = async (e) => {
@@ -51,7 +86,7 @@ export const AdminDataContextProvider = ({ children }) => {
 
       let res = await axios.post(backendUrl + "/api/products/add", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+         "token":token,
         },
       });
       if (res.data.success) {
@@ -61,7 +96,7 @@ export const AdminDataContextProvider = ({ children }) => {
         setprice(0);
         setcategory("Mens");
         setsubCategory("Topwear");
-        setsizes([])
+        setsizes([]);
         setimage1();
         setimage2();
         setimage3();
@@ -77,7 +112,11 @@ export const AdminDataContextProvider = ({ children }) => {
 
   let deleteProduct = async (id) => {
     try {
-      let res = await axios.delete(backendUrl + `/api/products/delete/${id}`);
+      let res = await axios.delete(backendUrl + `/api/products/delete/${id}`, {
+        headers: {
+          "token": token,
+        },
+      });
       if (res.data.success) {
         toast.success(res.data.message);
       } else {
@@ -94,6 +133,10 @@ export const AdminDataContextProvider = ({ children }) => {
     settoken,
     products,
     setproducts,
+    email,
+    setemail,
+    password,
+    setpassword,
     name,
     setname,
     bestseller,
@@ -119,6 +162,8 @@ export const AdminDataContextProvider = ({ children }) => {
     fetchAllProducts,
     addProduct,
     deleteProduct,
+    handleLogin,
+    logOutFunction,
   };
 
   return (
