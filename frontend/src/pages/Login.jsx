@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  let {navigate,token,   email, setemail, password, setpassword, loginHandler } =
+    useContext(AuthContext);
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="w-full flex flex-col justify-center items-center py-24 gap-12">
@@ -32,6 +39,7 @@ const Login = () => {
         </p>
         <input
           type="submit"
+          onClick={(e) => loginHandler(e)}
           value={"Log In"}
           className="bg-black font-light px-4 py-2 cursor-pointer text-white w-[8rem]"
         />

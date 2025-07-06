@@ -7,7 +7,6 @@ export const DataContext = createContext();
 export const DataContextProvider = ({ children }) => {
   let {singleProduct, setsingleProduct} = useContext(ProductContext)
   const [sideBar, setsideBar] = useState(false); // example state
-  const [searchText, setsearchText] = useState("");
   const [searchBar, setsearchBar] = useState(false);
   const [cart, setcart] = useState([]);
   const [selectedSize, setselectedSize] = useState("");
@@ -78,8 +77,6 @@ export const DataContextProvider = ({ children }) => {
   let value = {
     sideBar,
     setsideBar,
-    searchText,
-    setsearchText,
     searchBar,
     setsearchBar,
     cart,

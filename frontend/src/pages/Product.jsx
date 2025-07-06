@@ -3,9 +3,11 @@ import { assets } from "../assets/frontend_assets/assets";
 import { ProductContext } from "../context/ProductContext";
 import RelatedProducts from "../components/RelatedProducts";
 import { DataContext } from "../context/DataContext";
+import { useParams } from "react-router-dom";
 
 const Product = () => {
-  let { singleProduct, setsingleProduct } = useContext(ProductContext);
+  let { singleProduct, handelRelatedProducts, handleSingleProduct } =
+    useContext(ProductContext);
 
   let { handleAdditionInCart } = useContext(DataContext);
 
@@ -19,16 +21,17 @@ const Product = () => {
     }
   };
 
-  // finding product whenever new product is selected from collection or related products
-  // useEffect(() => {
-  //   setsingleProduct(products?.find((item) => item._id === id));
-  // }, [id]);
+  //   whenever selected product changes , related product change
+  let { id } = useParams();
+  useEffect(() => {
+    handleSingleProduct(id);
+  }, []);
 
-  // updating selected Image whenever selected product changes
+  // updating Related Products & selected Image whenever selected product changes
   useEffect(() => {
     if (singleProduct) {
-      console.log(singleProduct);
       setimage(singleProduct.images?.[0]);
+      handelRelatedProducts();
     }
     setselectedSize("");
   }, [singleProduct]);

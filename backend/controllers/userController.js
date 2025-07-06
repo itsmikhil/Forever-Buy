@@ -48,7 +48,7 @@ let handleUserRegistration = async (req, res) => {
 
     let token = createToken(result.email, result._id);
 
-    return res.json({ success: true, token });
+    return res.json({ success: true, token, message: "Welcome!" });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
@@ -85,7 +85,7 @@ let handleUserLogin = async (req, res) => {
 
     let token = createToken(exist.email, exist._id);
 
-    return res.json({ success: true, token });
+    return res.json({ success: true, token, message: "Welcome Back !" });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }

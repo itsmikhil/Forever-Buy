@@ -5,15 +5,18 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { DataContextProvider } from "./context/DataContext.jsx";
 import { ProductContextProvider } from "./context/ProductContext.jsx";
+import {  AuthContextProvider } from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <ProductContextProvider>
-        <DataContextProvider>
-          <App />
-        </DataContextProvider>
-      </ProductContextProvider>
+      <AuthContextProvider>
+        <ProductContextProvider>
+          <DataContextProvider>
+            <App />
+          </DataContextProvider>
+        </ProductContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

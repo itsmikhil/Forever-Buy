@@ -15,7 +15,7 @@ export const ProductContextProvider = ({ children }) => {
   const [pricingOrder, setpricingOrder] = useState("relevant");
   const [showFilters, setshowFilters] = useState(true);
   const [searchText, setsearchText] = useState("");
-  const [singleProduct, setsingleProduct] = useState({});
+  const [singleProduct, setsingleProduct] = useState();
   const [relatedProducts, setrelatedProducts] = useState([]);
 
   // <-------------------Fetching all products------------------------>
@@ -123,45 +123,42 @@ export const ProductContextProvider = ({ children }) => {
   let handleSingleProduct = async (id) => {
     try {
       let res = await axios.get(backendUrl + `/api/products/single/${id}`);
+
       if (res.data.success) {
-        console.log(res.data);
         setsingleProduct(res.data.singleProduct);
       } else {
-        toast.error(res.message);
+        toast.error(res.data.message);
       }
     } catch (error) {
       console.log(error.message);
     }
   };
 
+  // useEffect of singleProduct and Related Product shifted to Product Page to lower api calls called together
+
   // <-------------------Fetching Related Product------------------------>
 
   //   finding related products using keywords
   let handelRelatedProducts = () => {
-    let result = products;
-    let keywords = singleProduct.name.toLowerCase().split(" ");
+    if (singleProduct != {}) {
+      let result = products;
+      let keywords = singleProduct?.name.toLowerCase().split(" ");
 
-    result = result.filter(
-      (item) =>
-        item != singleProduct &&
-        item.category == singleProduct.category &&
-        item.subCategory == singleProduct.subCategory &&
-        keywords.some((word) => item.name.toLowerCase().includes(word))
-    );
-    // we want max 5 products
-    if (result.length > 5) {
-      result = result.slice(0, 5);
+      result = result.filter(
+        (item) =>
+          item != singleProduct &&
+          item.category == singleProduct.category &&
+          item.subCategory == singleProduct.subCategory &&
+          keywords.some((word) => item.name.toLowerCase().includes(word))
+      );
+      // we want max 5 products
+      if (result.length > 5) {
+        result = result.slice(0, 5);
+      }
+
+      setrelatedProducts(result);
     }
-
-    setrelatedProducts(result);
   };
-
-  //   whenever selected product changes , related product change
-  useEffect(() => {
-    if (singleProduct) {
-      handelRelatedProducts();
-    }
-  }, [singleProduct]);
 
   let value = {
     products,
