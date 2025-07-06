@@ -4,12 +4,11 @@ const userAuth = (req, res, next) => {
   let { token } = req.headers;
 
   if (!token) {
-    console.log("this case excuted");
     return res.json({ success: false, message: "Please Login" });
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.id;
+    req.body.userId = decoded.id;
     next();
   } catch (err) {
     console.log(err.message);

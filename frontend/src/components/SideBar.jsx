@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { DataContext } from "../context/DataContext";
+import { CartContext } from "../context/CartContext";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/frontend_assets/assets";
 
 const SideBar = () => {
-  const { sideBar, setsideBar } = useContext(DataContext);
+  const { sideBar, setsideBar } = useContext(CartContext);
   return (
     sideBar && (
       <div className="absolute top-0 left-0 sidebar w-full h-screen flex flex-col z-[10] bg-white text-center text-5xl justify-center items-center">

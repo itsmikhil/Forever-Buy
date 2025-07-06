@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/frontend_assets/assets";
-import { DataContext } from "../context/DataContext";
+import { CartContext } from "../context/CartContext";
 import { useLocation } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 
 const Search = () => {
   let { searchText, setsearchText } = useContext(ProductContext);
-  let { searchBar, setsearchBar } = useContext(DataContext);
+  let { searchBar, setsearchBar } = useContext(CartContext);
   const location = useLocation();
 
   return (

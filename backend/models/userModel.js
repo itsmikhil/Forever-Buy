@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
           quantity: Number,
         },
       ],
-      default: {},
+      default: [],
     },
   },
   { minimize: false }

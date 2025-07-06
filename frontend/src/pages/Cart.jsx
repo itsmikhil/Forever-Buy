@@ -1,17 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import { DataContext } from "../context/DataContext";
+import { CartContext } from "../context/CartContext";
 import { assets } from "../assets/frontend_assets/assets";
 import { NavLink } from "react-router-dom";
 
-const Cart = () => { 
+const Cart = () => {
   let {
     cart,
     setcart,
     totalBill,
     settotalBill,
-    handelDeletionInCart,
     billCalculation,
-  } = useContext(DataContext);
+    handleGetCartData,
+    handleUpdateProductQuantity,handleDeletionFromCart
+  } = useContext(CartContext);
+
+  useEffect(() => {
+    handleGetCartData();
+  }, []);
 
   useEffect(() => {
     billCalculation();
@@ -40,16 +45,16 @@ const Cart = () => {
                   <div className="w-30 sm:h-30 sm:w-25 overflow-hidden">
                     <img
                       className="object-cover"
-                      src={item.imageToBeShown}
+                      src={item.productId.images[0]}
                       alt=""
                     />
                   </div>
                   {/* info */}
                   {/* leftside info */}
                   <div className="flex flex-col py-3 gap-3">
-                    <h1>{item.name}</h1>
+                    <h1>{item.productId.name}</h1>
                     <div className="flex gap-4 items-center">
-                      <h1>${item.price}</h1>
+                      <h1>${item.productId.price}</h1>
                       <h1 className="px-2 py-1 bg-gray-200">{item.size}</h1>
                     </div>
                   </div>
@@ -58,12 +63,19 @@ const Cart = () => {
                 <input
                   className="border-[1px] border-gray-300 w-[3rem] sm:w-[4rem] px-2 py-1"
                   type="number"
-                  defaultValue={1}
+                  onChange={(e) =>
+                    handleUpdateProductQuantity(
+                      item.productId._id,
+                      e.target.value,
+                      item.size
+                    )
+                  }
+                  defaultValue={item.quantity}
                   name=""
                   id=""
                 />
                 <img
-                  onClick={() => handelDeletionInCart(item.id, item.size)}
+                  onClick={() => handleDeletionFromCart(item.productId, item.size)}
                   className="w-5 cursor-pointer h-5"
                   src={assets.bin_icon}
                   alt=""

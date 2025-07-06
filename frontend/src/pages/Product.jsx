@@ -2,18 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import { ProductContext } from "../context/ProductContext";
 import RelatedProducts from "../components/RelatedProducts";
-import { DataContext } from "../context/DataContext";
+import { CartContext } from "../context/CartContext";
 import { useParams } from "react-router-dom";
 
 const Product = () => {
   let { singleProduct, handelRelatedProducts, handleSingleProduct } =
     useContext(ProductContext);
 
-  let { handleAdditionInCart } = useContext(DataContext);
+  let { handleAddToCart } = useContext(CartContext);
 
   const [image, setimage] = useState(singleProduct?.images[0]);
 
-  const { selectedSize, setselectedSize } = useContext(DataContext);
+  const { selectedSize, setselectedSize } = useContext(CartContext);
 
   let handleImageSelection = () => {
     if (singleProduct) {
@@ -108,7 +108,7 @@ const Product = () => {
               })}
             </div>
             <button
-              onClick={handleAdditionInCart}
+              onClick={handleAddToCart}
               className="uppercase  bg-black text-white px-8 py-2 cursor-pointer w-[11rem]"
             >
               Add To Cart

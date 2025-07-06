@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
 import SideBar from "./SideBar";
-import { DataContext } from "../context/DataContext";
+import { CartContext } from "../context/CartContext";
 import Search from "./Search";
 import { AuthContext } from "../context/AuthContext";
 import { IoIosLogOut } from "react-icons/io";
@@ -20,7 +20,7 @@ const NavBar = () => {
     setsearchText,
     cart,
     setcart,
-  } = useContext(DataContext);
+  } = useContext(CartContext);
 
   // search comp handling
   let handleSearchComp = () => {
