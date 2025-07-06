@@ -3,69 +3,26 @@ import Title from "./Title";
 import { assets, products } from "../assets/frontend_assets/assets";
 import { NavLink } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
+import { ProductContext } from "../context/ProductContext";
 
 const AllCollection = () => {
-  const [filteredProducts, setfilteredProducts] = useState(products);
-  const [selectedFilters, setselectedFilters] = useState([]);
-  const [selectedTypes, setselectedTypes] = useState([]);
-  const [pricingOrder, setpricingOrder] = useState("relevant");
-  const [showFilters, setshowFilters] = useState(true);
-  let {searchText, setsearchText}=useContext(DataContext)
-
-  //   storing selected category
-  let handleSelectionOfFilter = (e) => {
-    if (selectedFilters.includes(e.target.value)) {
-      setselectedFilters(
-        selectedFilters.filter((item) => item != e.target.value)
-      );
-    } else {
-      setselectedFilters([...selectedFilters, e.target.value]);
-    }
-  };
-
-  // selection of types
-  let handleSelectionOfTypes = (e) => {
-    if (selectedTypes.includes(e.target.value)) {
-      setselectedTypes(selectedTypes.filter((item) => item != e.target.value));
-    } else {
-      setselectedTypes([...selectedTypes, e.target.value]);
-    }
-  };
-
-  //   updating filtered products based on selected category
-  let handleFilterProducts = () => {
-    let updatedProducts = [...products];
-
-    // category based sorting
-    if (selectedFilters.length > 0) {
-      updatedProducts = updatedProducts.filter((item) =>
-        selectedFilters.includes(item.category)
-      );
-    }
-    // type based sorting
-    if (selectedTypes.length > 0) {
-      updatedProducts = updatedProducts.filter((item) =>
-        selectedTypes.includes(item.subCategory)
-      );
-    }
-
-    //price based sorting
-    if (pricingOrder === "Low to High") {
-      updatedProducts.sort((a, b) => a.price - b.price);
-    } else if (pricingOrder === "High to low") {
-      updatedProducts.sort((a, b) => b.price - a.price);
-    }
-
-    // search based sorting
-    if (searchText.trim() != "") {
-      updatedProducts = updatedProducts.filter((item)=>item.name.toLowerCase().includes(searchText.trim().toLowerCase()));
-    }
-    setfilteredProducts(updatedProducts);
-  };
-
-  useEffect(() => {
-    handleFilterProducts();
-  }, [selectedFilters, pricingOrder, selectedTypes, searchText]);
+  let {
+    filteredProducts,
+    setfilteredProducts,
+    selectedFilters,
+    setselectedFilters,
+    selectedsubCategory,
+    setselectedsubCategory,
+    pricingOrder,
+    setpricingOrder,
+    showFilters,
+    setshowFilters,
+    searchText,
+    setsearchText,
+    handleSelectionOfFilter,
+    handleSelectionOfsubCategory,
+    handleFilterProducts,
+  } = useContext(ProductContext);
 
   return (
     <div className="w-full min-h-screen">
@@ -133,7 +90,7 @@ const AllCollection = () => {
                       name="Topwear"
                       id="Topwear"
                       value={"Topwear"}
-                      onChange={handleSelectionOfTypes}
+                      onChange={handleSelectionOfsubCategory}
                     />
                     <label htmlFor="Topwear">Topwear</label>
                   </div>
@@ -143,7 +100,7 @@ const AllCollection = () => {
                       name="Bottomwear"
                       id="Bottomwear"
                       value={"Bottomwear"}
-                      onChange={handleSelectionOfTypes}
+                      onChange={handleSelectionOfsubCategory}
                     />
                     <label htmlFor="Bottomwear">Bottomwear</label>
                   </div>
@@ -153,7 +110,7 @@ const AllCollection = () => {
                       name="Winterwear"
                       id="Winterwear"
                       value="Winterwear"
-                      onChange={handleSelectionOfTypes}
+                      onChange={handleSelectionOfsubCategory}
                     />
                     <label htmlFor="Winterwear">Winterwear</label>
                   </div>
@@ -188,25 +145,30 @@ const AllCollection = () => {
           </div>
           {/* Products */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-            {filteredProducts.map((item, index) => {
-              return (
-                <div key={index} className="flex flex-col gap-2 cursor-pointer">
-                  <NavLink to={`/product/${item._id}`}>
-                    <div className="overflow-hidden">
-                      <img
-                        src={item.image[0]}
-                        className="hover:scale-105 transition-transform ease-out duration-150 object-cover"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <h1 className="text-[0.8rem]">{item.name}</h1>
-                      <h1 className="text-sm">${item.price}</h1>
-                    </div>
-                  </NavLink>
-                </div>
-              );
-            })}
+            {products &&
+              filteredProducts &&
+              filteredProducts.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-2 cursor-pointer"
+                  >
+                    <NavLink to={`/product/${item._id}`}>
+                      <div className="overflow-hidden">
+                        <img
+                          src={item.images[0]}
+                          className="hover:scale-105 transition-transform ease-out duration-150 object-cover"
+                          alt=""
+                        />
+                      </div>
+                      <div>
+                        <h1 className="text-[0.8rem]">{item.name}</h1>
+                        <h1 className="text-sm">${item.price}</h1>
+                      </div>
+                    </NavLink>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

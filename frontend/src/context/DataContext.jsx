@@ -44,8 +44,6 @@ export const DataContextProvider = ({ children }) => {
 
     setcart([...cart, productToBeAdded]);
   };
-  console.log(cart);
-  console.log(selectedSize);
 
   let handelDeletionInCart = (removalId, removalSize) => {
     setcart(

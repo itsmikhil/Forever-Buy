@@ -86,7 +86,7 @@ export const AdminDataContextProvider = ({ children }) => {
 
       let res = await axios.post(backendUrl + "/api/products/add", formData, {
         headers: {
-         "token":token,
+          token: token,
         },
       });
       if (res.data.success) {
@@ -114,7 +114,7 @@ export const AdminDataContextProvider = ({ children }) => {
     try {
       let res = await axios.delete(backendUrl + `/api/products/delete/${id}`, {
         headers: {
-          "token": token,
+          token: token,
         },
       });
       if (res.data.success) {
