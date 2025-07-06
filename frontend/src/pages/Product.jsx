@@ -1,40 +1,34 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Login from "./Login";
 import { assets } from "../assets/frontend_assets/assets";
 import { ProductContext } from "../context/ProductContext";
 import RelatedProducts from "../components/RelatedProducts";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import { DataContext } from "../context/DataContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Product = () => {
-  let { id } = useParams();
-  let { products } = useContext(ProductContext);
-  let { singleProduct, setsingleProduct, handleAdditionInCart } =
-    useContext(DataContext);
+  let { singleProduct, setsingleProduct } = useContext(ProductContext);
 
-  const [image, setimage] = useState(singleProduct?.image[0]);
+  let { handleAdditionInCart } = useContext(DataContext);
+
+  const [image, setimage] = useState(singleProduct?.images[0]);
 
   const { selectedSize, setselectedSize } = useContext(DataContext);
 
   let handleImageSelection = () => {
     if (singleProduct) {
-      setimage(singleProduct.image[0]);
+      setimage(singleProduct.images[0]);
     }
   };
 
   // finding product whenever new product is selected from collection or related products
-  useEffect(() => {
-    setsingleProduct(products?.find((item) => item._id === id));
-  }, [id]);
+  // useEffect(() => {
+  //   setsingleProduct(products?.find((item) => item._id === id));
+  // }, [id]);
 
   // updating selected Image whenever selected product changes
   useEffect(() => {
     if (singleProduct) {
-      setimage(singleProduct.image?.[0]);
+      console.log(singleProduct);
+      setimage(singleProduct.images?.[0]);
     }
     setselectedSize("");
   }, [singleProduct]);
@@ -46,7 +40,7 @@ const Product = () => {
           {/* left */}
           <div className="flex w-full flex-col-reverse sm:flex-row sm:w-[45%] relative gap-2  justify-center">
             <div className="grid grid-cols-4 sm:grid-rows-4 sm:grid-cols-1 gap-2">
-              {singleProduct.image.map((item, index) => {
+              {singleProduct.images.map((item, index) => {
                 return (
                   <img
                     onClick={() => setimage(item)}
@@ -124,11 +118,7 @@ const Product = () => {
             </div>
           </div>
         </div>
-        <RelatedProducts
-          singleProduct={singleProduct}
-          setsingleProduct={setsingleProduct}
-        />
-        <ToastContainer/>
+        <RelatedProducts />
       </>
     )
   );

@@ -3,34 +3,12 @@ import { ProductContext } from "../context/ProductContext";
 import Title from "./Title";
 import { NavLink } from "react-router-dom";
 
-const RelatedProducts = ({ singleProduct, setsingleProduct }) => {
-  let { products } = useContext(ProductContext);
-  const [relatedProducts, setrelatedProducts] = useState([]);
+const RelatedProducts = () => {
+  let { products, singleProduct,relatedProducts, setrelatedProducts,handleSingleProduct,handelRelatedProducts } =
+  useContext(ProductContext);
 
-  //   finding related products using keywords
-  let handelRelatedProducts = () => {
-    let result = products;
-    let keywords = singleProduct.name.toLowerCase().split(" ");
 
-    result = result.filter(
-      (item) =>
-        item != singleProduct &&
-        item.category == singleProduct.category &&
-        item.subCategory == singleProduct.subCategory &&
-        keywords.some((word) => item.name.toLowerCase().includes(word))
-    );
-    // we want max 5 products
-    if (result.length > 5) {
-      result = result.slice(0, 5);
-    }
-
-    setrelatedProducts(result);
-  };
-
-  //   whenever selected product changes , related product change
-  useEffect(() => {
-    handelRelatedProducts();
-  }, [singleProduct]);
+  
 
   return (
     <div className="w-full py-4">
@@ -39,10 +17,13 @@ const RelatedProducts = ({ singleProduct, setsingleProduct }) => {
         {relatedProducts.map((item, index) => {
           return (
             <div key={index} className="flex flex-col gap-2 cursor-pointer">
-              <NavLink to={`/product/${item._id}`}>
+              <NavLink
+                onClick={() => handleSingleProduct(item._id)}
+                to={`/product/${item._id}`}
+              >
                 <div className="overflow-hidden">
                   <img
-                    src={item.image[0]}
+                    src={item.images[0]}
                     className="hover:scale-105 transition-transform ease-out duration-150 object-cover"
                     alt=""
                   />

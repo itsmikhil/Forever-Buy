@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Title from "./Title";
 import { NavLink } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 
 const Latest = () => {
 
-  let { latestProducts, products } = useContext(ProductContext);
+  let { latestProducts, products,handleSingleProduct } = useContext(ProductContext);
 
   return (
     <div className="w-full">
@@ -20,7 +20,7 @@ const Latest = () => {
           latestProducts.map((item, index) => {
             return (
               <div key={index} className="flex flex-col gap-2 cursor-pointer">
-                <NavLink to={`/product/${item._id}`}>
+                <NavLink onClick={()=>handleSingleProduct(item._id)} to={`/product/${item._id}`}>
                   <div className="overflow-hidden">
                     <img
                       src={item.images[0]}

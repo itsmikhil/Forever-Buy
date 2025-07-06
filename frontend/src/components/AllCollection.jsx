@@ -1,27 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import Title from "./Title";
 import { assets, products } from "../assets/frontend_assets/assets";
 import { NavLink } from "react-router-dom";
-import { DataContext } from "../context/DataContext";
 import { ProductContext } from "../context/ProductContext";
 
 const AllCollection = () => {
   let {
     filteredProducts,
-    setfilteredProducts,
-    selectedFilters,
-    setselectedFilters,
-    selectedsubCategory,
-    setselectedsubCategory,
-    pricingOrder,
     setpricingOrder,
     showFilters,
     setshowFilters,
-    searchText,
-    setsearchText,
     handleSelectionOfFilter,
     handleSelectionOfsubCategory,
-    handleFilterProducts,
+    handleSingleProduct,
   } = useContext(ProductContext);
 
   return (
@@ -82,7 +72,7 @@ const AllCollection = () => {
               </div>
               {/* subcategories */}
               <div className="flex flex-col gap-2 border-[1px] p-4 border-gray-300">
-                <h1>TYPE</h1>
+                <h1 className="uppercase">Sub Category</h1>
                 <div className="text-gray-500 text-sm flex flex-col gap-2">
                   <div className="flex gap-2">
                     <input
@@ -153,7 +143,10 @@ const AllCollection = () => {
                     key={index}
                     className="flex flex-col gap-2 cursor-pointer"
                   >
-                    <NavLink to={`/product/${item._id}`}>
+                    <NavLink
+                      onClick={() => handleSingleProduct(item._id)}
+                       to={`/product/${item._id}`}
+                    >
                       <div className="overflow-hidden">
                         <img
                           src={item.images[0]}

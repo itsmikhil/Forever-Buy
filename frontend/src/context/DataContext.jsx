@@ -1,15 +1,16 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { ProductContext } from "./ProductContext";
 
 export const DataContext = createContext();
 
 export const DataContextProvider = ({ children }) => {
+  let {singleProduct, setsingleProduct} = useContext(ProductContext)
   const [sideBar, setsideBar] = useState(false); // example state
   const [searchText, setsearchText] = useState("");
   const [searchBar, setsearchBar] = useState(false);
   const [cart, setcart] = useState([]);
   const [selectedSize, setselectedSize] = useState("");
-  const [singleProduct, setsingleProduct] = useState();
   const [totalBill, settotalBill] = useState();
   // const [reqQuantity, setreqQuanitity] = useState();
 
@@ -25,7 +26,7 @@ export const DataContextProvider = ({ children }) => {
 
     let productToBeAdded = {
       name: singleProduct.name,
-      imageToBeShown: singleProduct.image[0],
+      imageToBeShown: singleProduct.images[0],
       size: selectedSize,
       id: singleProduct._id,
       quantity: 1,
@@ -85,8 +86,6 @@ export const DataContextProvider = ({ children }) => {
     setcart,
     selectedSize,
     setselectedSize,
-    singleProduct,
-    setsingleProduct,
     totalBill,
     settotalBill,
     handleAdditionInCart,
