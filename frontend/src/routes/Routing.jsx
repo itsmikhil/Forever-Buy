@@ -8,6 +8,8 @@ import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
 import Product from '../pages/Product'
 import Cart from '../pages/Cart'
+import PlaceOrder from '../pages/PlaceOrder'
+import Orders from '../pages/Orders'
 
 const Routing = () => {
   return (
@@ -20,6 +22,9 @@ const Routing = () => {
       <Route element={<SignUp/>} path={"/signup"} />
       <Route element={<Product/>} path={"/product/:id"} />
       <Route element={<Cart/>} path={"/cart"} />
+      <Route element={<PlaceOrder/>} path={"/placeOrder"} />
+      <Route element={<Orders/>} path={"/orders"} />
+
     </Routes>
   )
 }

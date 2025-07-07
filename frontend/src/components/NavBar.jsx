@@ -6,6 +6,7 @@ import { CartContext } from "../context/CartContext";
 import Search from "./Search";
 import { AuthContext } from "../context/AuthContext";
 import { IoIosLogOut } from "react-icons/io";
+import { BsCart2 } from "react-icons/bs";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const NavBar = () => {
   };
   return (
     <>
-      <div className="w-full flex px-6 sm:px-24 justify-between py-4 items-center">
+      <div className="w-full flex px-6 md:px-24 justify-between py-4 items-center">
         <img className="w-[9rem] object-cover" src={assets.logo} alt="" />
         <ul className="hidden md:inline-flex  gap-4 ">
           <li className="uppercase text-md relative">
@@ -57,17 +58,31 @@ const NavBar = () => {
             </NavLink>
           </li>
         </ul>
-        <div className="flex items-center gap-3 ">
+        <div className="flex items-center gap-4 ">
           <img
             onClick={handleSearchComp}
             src={assets.search_icon}
             alt=""
             className=" w-[1.5rem] h-[1.5rem] cursor-pointer"
           />
+
+          <NavLink className={"relative hidden md:block"} to={"/cart"}>
+            <BsCart2 className="w-[1.5rem] h-[1.5rem] object-cover cursor-pointer" />
+            <div className="absolute w-3 h-3 bg-black text-white rounded-full top-[0px] right-[-4px]  text-[0.5rem] text-center font-extrabold">
+              {cart.length}
+            </div>
+          </NavLink>
+          <NavLink>
+            <img
+              src={assets.cart_icon}
+              alt=""
+              className=" w-[1.5rem] h-[1.5rem] cursor-pointer hidden md:block"
+            />
+          </NavLink>
           {token ? (
             <IoIosLogOut
               onClick={handleLogOut}
-              className="w-[1.75rem] h-[1.75rem] object-cover cursor-pointer"
+              className="scale-[1.8] object-cover cursor-pointer hidden md:block"
             />
           ) : (
             <img
@@ -76,20 +91,9 @@ const NavBar = () => {
               }}
               src={assets.profile_icon}
               alt=""
-              className="w-[1.5rem] h-[1.5rem] cursor-pointer "
+              className="w-[1.5rem] h-[1.5rem] cursor-pointer hidden md:block"
             />
           )}
-
-          <NavLink className={"relative"} to={"/cart"}>
-            <img
-              src={assets.cart_icon}
-              alt=""
-              className="w-[1.5rem] h-[1.5rem] cursor-pointer "
-            />
-            <div className="absolute w-3 h-3 bg-black rounded-full bottom-[-2px] right-[-3px] text-white text-[0.5rem] text-center font-bold">
-              {cart.length}
-            </div>
-          </NavLink>
           <div className="block md:hidden">
             <img
               onClick={() => setsideBar(!sideBar)}

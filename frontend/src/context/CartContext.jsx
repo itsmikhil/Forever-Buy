@@ -16,7 +16,7 @@ export const CartContextProvider = ({ children }) => {
   const [searchBar, setsearchBar] = useState(false);
   const [cart, setcart] = useState([]);
   const [selectedSize, setselectedSize] = useState("");
-  const [totalBill, settotalBill] = useState();
+  const [totalBill, settotalBill] = useState(0);
   // const [reqQuantity, setreqQuanitity] = useState();
 
   // Adding products in cart
