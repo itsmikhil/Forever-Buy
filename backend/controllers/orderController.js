@@ -16,14 +16,30 @@ const getAllOrders = async (req, res) => {
   }
 };
 
-const updateOrderStatus = async (req, res) => {};
+const updateOrderStatus = async (req, res) => {
+  try {
+    console.log("Working");
+
+    let { orderStatus, orderId } = req.body;
+    console.log(orderStatus,orderId);
+    
+    if (!orderStatus || !orderId) {
+      return res.json({
+        success: false,
+        message: "Provide all required fields",
+      });
+    }
+    let result = await orderModel.findByIdAndUpdate(orderId, { orderStatus });
+    res.json({ success: true, message: "Order status updated" });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
 
 // for users
 const placeOrder = async (req, res) => {
   try {
     let { userId, items, deliveryDetails, paymentMethod, amount } = req.body;
-
-    console.log(userId, items, deliveryDetails, paymentMethod, amount);
 
     if (!items || !deliveryDetails || !paymentMethod || !amount) {
       return res.json({ success: false, message: "Enter all required fields" });

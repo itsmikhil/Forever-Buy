@@ -148,6 +148,28 @@ export const AdminDataContextProvider = ({ children }) => {
     }
   };
 
+  let updateOrderStatus = async (updatedOrderStatus, orderId) => {
+    try {
+      let res = await axios.post(
+        backendUrl + "/api/order/status",
+        {
+          orderStatus:updatedOrderStatus,
+          orderId,
+        },
+        { headers: { token } }
+      );
+      console.log(res.data);
+      
+      if (res.data.success) {
+        getAllOrders();
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   let value = {
     backendUrl,
     token,
@@ -188,6 +210,7 @@ export const AdminDataContextProvider = ({ children }) => {
     handleLogin,
     logOutFunction,
     getAllOrders,
+    updateOrderStatus,
   };
 
   return (
