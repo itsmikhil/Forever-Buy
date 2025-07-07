@@ -21,6 +21,7 @@ export const AdminDataContextProvider = ({ children }) => {
   const [image2, setimage2] = useState();
   const [image3, setimage3] = useState();
   const [image4, setimage4] = useState();
+  const [orders, setorders] = useState([]);
 
   // <----------------------Add expire token feature------------------->
 
@@ -127,6 +128,26 @@ export const AdminDataContextProvider = ({ children }) => {
     }
   };
 
+  let getAllOrders = async () => {
+    try {
+      let res = await axios.post(
+        backendUrl + "/api/order/list",
+        {},
+        { headers: { token } }
+      );
+      console.log(res.data);
+
+      if (res.data.success) {
+        setorders(res.data.allOrders);
+        console.log(orders);
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   let value = {
     backendUrl,
     token,
@@ -159,11 +180,14 @@ export const AdminDataContextProvider = ({ children }) => {
     setimage3,
     image4,
     setimage4,
+    orders,
+    setorders,
     fetchAllProducts,
     addProduct,
     deleteProduct,
     handleLogin,
     logOutFunction,
+    getAllOrders,
   };
 
   return (

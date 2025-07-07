@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { assets } from "../assets/frontend_assets/assets";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import CartBill from "../components/CartBill";
+import { AuthContext } from "../context/AuthContext";
 
 const Cart = () => {
+  const navigate=useNavigate();
+  let {token}=useContext(AuthContext)
   let {
     cart,
     setcart,
@@ -17,8 +20,10 @@ const Cart = () => {
   } = useContext(CartContext);
 
   useEffect(() => {
-    handleGetCartData();
-  }, []);
+    if (token) {
+      handleGetCartData();
+    }
+  }, [token]);
 
   useEffect(() => {
     billCalculation();
@@ -100,7 +105,7 @@ const Cart = () => {
         {/* heading */}
         <div className="w-[98%] sm:w-sm ">
           <CartBill />
-          <button className="bg-black text-white px-2 py-1 font-light mt-4">
+          <button onClick={()=>{cart.length>0?navigate("/placeOrder"):""}} className="bg-black text-white px-2 py-1 font-light mt-4 cursor-pointer">
             Proceed to checkout
           </button>
         </div>

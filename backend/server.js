@@ -7,6 +7,8 @@ import adminRouter from "./routes/adminRoute.js";
 import connectCloudinary from "./config/cloudinary.js";
 import productRouter from "./routes/productRoute.js";
 import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
+
 
 dotenv.config();
 const app = express();
@@ -23,6 +25,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/order",orderRouter)
 
 app.get("/", (req, res) => {
   res.send("Working");

@@ -72,7 +72,7 @@ const NavBar = () => {
               {cart.length}
             </div>
           </NavLink>
-          <NavLink>
+          <NavLink to={"/orders"}>
             <img
               src={assets.cart_icon}
               alt=""

@@ -26,6 +26,7 @@ const PlaceOrder = () => {
     setPhone,
     method,
     setMethod,
+    placeOrder,
   } = useContext(OrderContext);
 
   return (
@@ -135,7 +136,7 @@ const PlaceOrder = () => {
 
       <div className="mt-8">
         <div className="mt-8 min-w-80">
-          <CartBill/>
+          <CartBill />
         </div>
 
         <div className="mt-12">
@@ -175,12 +176,12 @@ const PlaceOrder = () => {
             </div>
 
             <div
-              onClick={() => setMethod("cod")}
+              onClick={() => setMethod("COD")}
               className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
             >
               <p
                 className={`min-w-3.5 h-3.5 border rounded-full ${
-                  method === "cod" ? "bg-green-400" : ""
+                  method === "COD" ? "bg-green-400" : ""
                 }`}
               ></p>
               <p className="text-gray-500 text-sm font-medium mx-4">
@@ -191,8 +192,9 @@ const PlaceOrder = () => {
 
           <div className="w-full text-end mt-8">
             <button
+              onClick={(e) => placeOrder(e)}
               type="submit"
-              className="bg-black text-white px-16 py-3 text-sm"
+              className="bg-black text-white px-16 py-3 text-sm cursor-pointer"
             >
               PLACE ORDER
             </button>
