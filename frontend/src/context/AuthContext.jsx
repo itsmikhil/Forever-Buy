@@ -73,7 +73,7 @@ export const AuthContextProvider = ({ children }) => {
 
   let handleLogOut = () => {
     settoken("");
-    localStorage.setItem("token", "");
+    localStorage.removeItem("token");
     toast.success("You have been Logged out");
   };
 

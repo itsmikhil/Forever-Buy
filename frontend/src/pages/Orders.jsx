@@ -8,9 +8,7 @@ const Orders = () => {
   let { orders, userOrders } = useContext(OrderContext);
 
   useEffect(() => {
-    if (token) {
       userOrders();
-    }
   }, [token]);
 
   return (

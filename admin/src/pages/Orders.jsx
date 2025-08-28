@@ -12,9 +12,6 @@ const Orders = () => {
       getAllOrders();
     }
   }, [token]);
-  if (orders) {
-    console.log(orders.items);
-  }
 
   return (
     <div className="w-full flex flex-col gap-3 px-3  sm:px-12 py-8 text-gray-500">
@@ -23,6 +20,7 @@ const Orders = () => {
         <div key={index} className="text-sm flex flex-col gap-2 lg:text-base lg:grid lg:grid-rows-1 lg:grid-cols-[1fr_3fr_2fr_1fr_2fr] border-1 border-gray-200 px-6 py-6">
           <img className="w-15" src={assets.parcel_icon} alt="" />
           <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-[1px]">
             {order.items.map((item,idx) => {
               return (
                 <h1 key={idx}>
@@ -30,6 +28,7 @@ const Orders = () => {
                 </h1>
               );
             })}
+            </div>
             <h1>
               {order.deliveryDetails.firstName} {order.deliveryDetails.lastName}
             </h1>

@@ -3,12 +3,14 @@ import { CartContext } from "./CartContext";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const OrderContext = createContext();
 
 export const OrderContextProvider = ({ children }) => {
   let { token } = useContext(AuthContext);
-  let { cart, totalBill } = useContext(CartContext);
+  let { cart,setcart, totalBill,handleGetCartData } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -48,8 +50,13 @@ export const OrderContextProvider = ({ children }) => {
         dataToBeSent,
         { headers: { token } }
       );
+
+      if (res.data.message === "Please Login") {
+        navigate("/login");
+      }
       if (res.data.success) {
         toast.success(res.data.message);
+        handleGetCartData()
         // reset states
         setcart([]);
         setFirstName("");
@@ -77,7 +84,9 @@ export const OrderContextProvider = ({ children }) => {
         {},
         { headers: { token } }
       );
-      console.log(res.data);
+      if (res.data.message === "Please Login") {
+        navigate("/login");
+      }
 
       if (res.data.success) {
         setOrders(res.data.userOrders);

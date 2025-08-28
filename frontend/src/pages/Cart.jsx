@@ -20,9 +20,7 @@ const Cart = () => {
   } = useContext(CartContext);
 
   useEffect(() => {
-    if (token) {
       handleGetCartData();
-    }
   }, [token]);
 
   useEffect(() => {

@@ -24,9 +24,7 @@ export const ProductContextProvider = ({ children }) => {
     try {
       let res = await axios.get(backendUrl + "/api/products/list");
       if (res.data.success) {
-        console.log(res.data);
         setproducts(res.data.allproducts);
-        toast.success("Working");
       } else {
         toast.error(res.data.message);
       }
@@ -49,7 +47,7 @@ export const ProductContextProvider = ({ children }) => {
 
   let handleLatestProducts = () => {
     if (products) {
-      setlatestProducts(products.slice(0, 10));
+      setlatestProducts(products.slice(30, 40));
     }
   };
 
@@ -146,7 +144,7 @@ export const ProductContextProvider = ({ children }) => {
 
       result = result.filter(
         (item) =>
-          item != singleProduct &&
+          item._id != singleProduct._id &&
           item.category == singleProduct.category &&
           item.subCategory == singleProduct.subCategory &&
           keywords.some((word) => item.name.toLowerCase().includes(word))

@@ -4,7 +4,6 @@ let handleAddToCart = async (req, res) => {
   try {
     let { id, quantity, size, userId } = req.body;
 
-    console.log(userId);
 
     // checking for missing fields
     if (!id || !size || !userId || quantity == null || quantity <= 0) {

@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/frontend_assets/assets";
+import { AuthContext } from "../context/AuthContext";
 
 const SideBar = () => {
+  let { token, handleLogOut } = useContext(AuthContext);
   const { sideBar, setsideBar } = useContext(CartContext);
   return (
     sideBar && (
@@ -43,6 +45,40 @@ const SideBar = () => {
           >
             contact us
           </NavLink>
+          {!token && (
+            <NavLink
+              className="uppercase"
+              to={"/login"}
+              onClick={() => setsideBar(false)}
+            >
+              login
+            </NavLink>
+          )}
+          <NavLink
+            className="uppercase"
+            to={"/cart"}
+            onClick={() => setsideBar(false)}
+          >
+            cart
+          </NavLink>
+          <NavLink
+            className="uppercase"
+            to={"/orders"}
+            onClick={() => setsideBar(false)}
+          >
+            orders
+          </NavLink>
+          {token && (
+            <NavLink
+              className="uppercase"
+              to={"/orders"}
+              onClick={() => {
+                setsideBar(false), handleLogOut();navigate("/")
+              }}
+            >
+              log out
+            </NavLink>
+          )}
         </ul>
       </div>
     )
